@@ -2,9 +2,10 @@
 
 void read_cmd(char *cmd, ssize_t line_size)
 {
-	int i;
+	int i, j;
 	char *ptr;
 	char *argv[] = {NULL, NULL};
+	char special_char[8] = {34, 39, 96, 92, 42, 38, 35, 32};
 
 	if (!cmd)
 		exit(EXIT_FAILURE);
@@ -19,16 +20,27 @@ void read_cmd(char *cmd, ssize_t line_size)
 	/* checks if command has only lowercase characters */
 	for (i = 0; i < line_size; i++)
 	{
+		for (j = 0; j < 8; j++)
+		{
+			if (cmd[i] == special_char[j])
+			{
+				write(2, "./shell: No such file or directory\n", 35);
+				free(cmd);
+				prompt();
+				return;
+			}
+		}
+		ptr[i] = cmd[i];
+	}
 
-		if ((cmd[i] >= 'a' && cmd[i] <= 'z') || cmd[i] == '/')
+		/*if ((cmd[i] >= 'a' && cmd[i] <= 'z') || cmd[i] == '/')
 			ptr[i] = cmd[i];	
 		else
 		{
 			write(2, "./shell: No such file or directory\n", 35);
 			free(cmd);
 			prompt();
-		}
-	}
+		}*/
 	ptr[i] = '\0';
 
 	if (fork() != 0)
