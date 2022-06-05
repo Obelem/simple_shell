@@ -1,5 +1,11 @@
 #include "shell.h"
-
+/**
+ * read_cmd - Read inputs from prompt
+ * @cmd: pointer to inputs from prompt
+ * @line_size: number of input characters
+ *
+ * Return: void
+ */
 void read_cmd(char *cmd, ssize_t line_size)
 {
 	int i, j;
@@ -9,15 +15,10 @@ void read_cmd(char *cmd, ssize_t line_size)
 
 	if (!cmd)
 		exit(EXIT_FAILURE);
-
 	ptr = malloc(sizeof(char) * line_size);
-
 	if (!ptr)
 		exit(EXIT_FAILURE);
-
 	argv[0] = ptr;
-
-	/* checks if command has only lowercase characters */
 	for (i = 0; i < line_size; i++)
 	{
 		for (j = 0; j < 8; j++)
@@ -25,29 +26,22 @@ void read_cmd(char *cmd, ssize_t line_size)
 			if (cmd[i] == special_char[j])
 			{
 				write(2, "./shell: No such file or directory\n", 35);
-				free(cmd);
-				prompt();
+				free(cmd), prompt();
 				return;
 			}
 		}
-		ptr[i] = cmd[i];
-	}
-
-		/*if ((cmd[i] >= 'a' && cmd[i] <= 'z') || cmd[i] == '/')
-			ptr[i] = cmd[i];	
+		if ((cmd[i] >= 'a' && cmd[i] <= 'z') || cmd[i] == '/')
+			ptr[i] = cmd[i];
 		else
 		{
 			write(2, "./shell: No such file or directory\n", 35);
-			free(cmd);
-			prompt();
-		}*/
+			free(cmd), prompt();
+		}
+	}
 	ptr[i] = '\0';
-
 	if (fork() != 0)
 	{
-		wait(NULL);
-		free(cmd);
-		prompt();
+		wait(NULL), free(cmd), prompt();
 	}
 	else
 	{
