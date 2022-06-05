@@ -4,7 +4,7 @@ void read_cmd(char *cmd, ssize_t line_size)
 {
 	int i;
 	char *ptr;
-	char *argv[] = {ptr, NULL};
+	char *argv[] = {NULL, NULL};
 
 	if (!cmd)
 		exit(EXIT_FAILURE);
@@ -13,6 +13,8 @@ void read_cmd(char *cmd, ssize_t line_size)
 
 	if (!ptr)
 		exit(EXIT_FAILURE);
+
+	argv[0] = ptr;
 
 	/* checks if command has only lowercase characters */
 	for (i = 0; i < line_size; i++)
