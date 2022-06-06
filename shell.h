@@ -8,6 +8,7 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <string.h>
 
 void prompt(void);
 void read_cmd(char *cmd, ssize_t line_size);
