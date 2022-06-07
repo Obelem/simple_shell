@@ -41,7 +41,7 @@ void tokenifier(char *cmd, ssize_t line_size)
 	{
 		num_of_chars = count_tok_char(token);
 		argv[i] = malloc(sizeof(char) * num_of_chars);
-		strcpy(argv[i], token);
+		_strcpy(argv[i], token);
 		token = strtok(NULL, delim);
 	}
 	argv[i] = NULL;

@@ -19,15 +19,15 @@ void file_path(char **argv, char *cmd, ssize_t line_size)
 		buf = malloc(sizeof(char) * len);
 		
 		/* copy text in argv[0] to buf */
-		strncpy(buf, argv[0], len);
+		_strncpy(buf, argv[0], len);
 		free(argv[0]);
 
 		/* update value of argv[0] */
 		argv[0] = malloc(sizeof(char) * (len + 5));
-		strcpy(argv[0], "/bin/");
+		_strcpy(argv[0], "/bin/");
 
 		/* append text from buffer to argv[0] */
-		strcat(argv[0], buf);
+		_strcat(argv[0], buf);
 
 		/* free buf when done */
 		free(buf);
