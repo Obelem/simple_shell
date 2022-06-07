@@ -46,5 +46,5 @@ void tokenifier(char *cmd, ssize_t line_size)
 	}
 	argv[i] = NULL;
 	free(cmd_buf);
-	read_cmd(argv, cmd_param, line_size);
+	file_path(argv, cmd_param, line_size);
 }
