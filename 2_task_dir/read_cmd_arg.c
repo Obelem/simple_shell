@@ -1,5 +1,13 @@
 #include "shell.h"
 
+/**
+ * read_cmd - Function to read and execute inputs
+ * @argv: Pointer to argumnets pointers
+ * @cmd: command line input
+ * @line_size: length of cmd
+ *
+ */
+
 void read_cmd(char **argv, char *cmd, ssize_t line_size)
 {
 	int i, j;
