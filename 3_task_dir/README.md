@@ -3,7 +3,7 @@
 ## 1. Workflow
 The program now takes this route:
 
-** prompt() -> tokenifier() -> file_path() -> read_cmd(); **
+**prompt() -> tokenifier() -> file_path() -> read_cmd();**
 
 ## 2. Why the file_stat() function?
 * It adds path to the command line input
