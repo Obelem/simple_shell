@@ -36,7 +36,7 @@ void file_path(char **argv, char *cmd, ssize_t line_size)
 		read_cmd(argv, cmd, line_size);
 	else
 	{
-		write(2, "Command does not exist\n", 23);
+		write(2, ":( Command does not exist\n", 26);
 		free(argv);
 		free(cmd);
 		prompt();

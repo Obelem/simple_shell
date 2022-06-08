@@ -27,7 +27,7 @@ void read_cmd(char **argv, char *cmd, ssize_t line_size)
 		{
 			if (cmd[i] == special_char[j])
 			{
-				write(2, "Do not use special characters\n", 30);
+				write(2, ":( Do not use special characters\n", 33);
 				free(cmd);
 				prompt();
 				return;
@@ -46,6 +46,6 @@ void read_cmd(char **argv, char *cmd, ssize_t line_size)
 	else
 	{
 		if (execve(argv[0], argv, NULL) == -1)
-			write(2, "File does not exist\n", 20);
+			write(2, ":( File does not exist\n", 23);
 	}
 }

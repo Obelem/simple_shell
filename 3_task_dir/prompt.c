@@ -14,7 +14,7 @@ void prompt(void)
 	while (line_size != EOF)
 	{
 		if (isatty(STDIN_FILENO))
-			write(1, "#cisfun$ ", 9);
+			write(1, ":) ", 3);
 
 		line_size = getline(&line, &len, stdin);
 
@@ -25,7 +25,6 @@ void prompt(void)
 			tokenifier(line, line_size - 1);
 	}
 
-	free(line);
 
 	if (isatty(STDIN_FILENO))
 		write(1, "\n", 1);
