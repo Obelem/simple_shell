@@ -4,8 +4,6 @@
  * prompt - get and read input 
  */
 
-/* Built in global variable to help access environment variables */
-extern char **environ;
 
 void prompt(void)
 {
