@@ -14,6 +14,7 @@ void prompt(void)
 	ssize_t line_size = 0;
 	int i, compare;
 	char *env = "env";
+	char *_exit = "exit";
 
 	while (line_size != EOF)
 	{
@@ -32,6 +33,9 @@ void prompt(void)
 			prompt();
 			return;
 		}
+		compare = strncmp(_exit, line, 4);
+		if (compare == 0)
+			exit(0);
 
 		if (line_size == -1)
 			break;
