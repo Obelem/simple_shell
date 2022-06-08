@@ -68,3 +68,41 @@ char *_strcat(char *dest, const char *src)
 
 	return (dest);
 }
+
+/**
+ * _strcmp - compare two strings
+ * @str1: pointer to first string
+ * @str2: pointer ro second string
+ *
+ * Return: 0 if match completely else -1
+ */
+
+int _strcmp(char *str1, char *str2)
+{
+	int i;
+
+	for (i = 0; str1[i] != '\0'; i++)
+		if (str1[i] != str2[i])
+			return (-1);
+
+	return (0);
+}
+
+/**
+ * _strncmp - compare n portion of string
+ * @str1: pointer to first string
+ * @str2: pointer ro second string
+ * @n: number of str1 chars to compare
+ *
+ * Return: 0 if match completely else -1
+ */
+
+int _strncmp(char *str1, char *str2, int n)
+{
+	int i;
+
+	for (i = 0; str1[i] != '\0' && i < n; i++)
+		if (str1[i] != str2[i])
+			return (-1);
+	return (0);
+}
