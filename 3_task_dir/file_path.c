@@ -20,7 +20,6 @@ void file_path(char **argv, char *cmd, ssize_t line_size)
 		
 		/* copy text in argv[0] to buf */
 		_strncpy(buf, argv[0], len);
-		free(argv[0]);
 
 		/* update value of argv[0] */
 		argv[0] = malloc(sizeof(char) * (len + 5));
