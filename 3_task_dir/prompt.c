@@ -30,6 +30,7 @@ void prompt(void)
 				printf("%s\n", environ[i]);
 			
 			prompt();
+			return;
 		}
 
 		if (line_size == -1)
