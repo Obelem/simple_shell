@@ -24,6 +24,8 @@ void add_to_argv(char **argv, char *token, int i, int n, char *delim);
 char *_strncpy(char *dest, const char *src, int n);
 char *_strcpy(char *dest, const char *src);
 char *_strcat(char *dest, const char *src);
+char *_strcmp(char *str1, char* str2);
+char *_strncmp(char *str1, char* str2, int n);
 
 
 #endif

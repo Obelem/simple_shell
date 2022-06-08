@@ -24,7 +24,7 @@ void prompt(void)
 		line_size = getline(&line, &len, stdin);
 
 		/* compares if input is env and prints env variables if true */
-		compare = strncmp(env, line, 3);
+		compare = _strncmp(env, line, 3);
 		if (compare == 0)
 		{
 			for (i = 0; environ[i]; i++)
@@ -33,7 +33,7 @@ void prompt(void)
 			prompt();
 			return;
 		}
-		compare = strncmp(_exit, line, 4);
+		compare = _strncmp(_exit, line, 4);
 		if (compare == 0)
 			exit(0);
 
