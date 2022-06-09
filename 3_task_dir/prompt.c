@@ -19,7 +19,7 @@ void prompt(void)
 		if (isatty(STDIN_FILENO))
 			write(1, ":) ", 3);
 
-		line_size = getline(&line, &len, stdin);
+		line_size = _getline(&line, &len, stdin);
 
 		/* compares if input is env and prints env variables if true */
 		compare = _strncmp(env, line, 3);
