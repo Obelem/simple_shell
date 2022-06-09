@@ -21,7 +21,8 @@ void file_path(char **argv, char *cmd, ssize_t line_size);
 /* utilities */
 int count_tok(char *cmd, char *delim);
 int count_tok_char(char *token);
-void add_to_argv(char **argv, char *token, int i, int n, char *delim);
+ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
+void assign_lineptr(char **lineptr, size_t *n, char *buffer, size_t b);
 
 /* strfunc */
 char *_strncpy(char *dest, const char *src, int n);
