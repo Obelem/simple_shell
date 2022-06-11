@@ -6,6 +6,10 @@
  * Return: 1 on failure, 0 on success
  */
 
+/**
+ * Hello Frank -> PLEASE, TAKE NOTE!!
+ * I used atoi() to convert from ascii to integer, we have to create ours
+ */
 int exit_process(char **argv)
 {
 	int ret_val = 0, i;
@@ -30,7 +34,7 @@ int exit_process(char **argv)
 				return (1);
 			}
 		}
-		ret_val = atoi(argv[1]);
+		ret_val = atoi(argv[1]); /* atoi() used here */
 		exit(ret_val);
 	}
 	return (0);
