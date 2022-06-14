@@ -24,7 +24,7 @@ extern char **environ;
 int prompt(void);
 int tokenifier(char *cmd, ssize_t line_size);
 void read_cmd(char **argv, char *cmd, ssize_t line_size); 
-int file_path(char **argv, char *cmd, ssize_t line_size); 
+int file_path(char **argv, int argc, char *cmd, ssize_t line_size); 
 
 /* utilities */
 int count_tok(char *cmd, char *delim);
@@ -40,6 +40,7 @@ int _strcmp(char *str1, char* str2);
 int _strncmp(char *str1, char* str2, int n);
 
 /* built-ins */
-int exit_process(char **argv); /* ----> just added <----*/
+int exit_process(int argc, char **argv); /* ----> just added <----*/
+int _setenv(int argc, char **argv);
 
 #endif

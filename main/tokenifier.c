@@ -51,5 +51,5 @@ int tokenifier(char *cmd, ssize_t line_size)
 	}
 	argv[i] = NULL;
 	free(cmd_buf);
-	return (file_path(argv, cmd_param, line_size));
+	return (file_path(argv, num_of_tokens, cmd_param, line_size));
 }
