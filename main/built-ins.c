@@ -93,18 +93,47 @@ int _setenv(int argc, char **argv)
  */
 int change_dir(int argc, char **argv)
 {
+	int val, i;
+	char *home = "HOME=";
+
+	char *buf = malloc(sizeof(char) * 50);
+
 	if (argc > 2)
 	{
 		write(2, ":( too many arguments\n", 22);
 		prompt();
 		return (-1);
 	}
+	if (argc == 2)
+	{
+		val = chdir(argv[1]);
+		if (val == -1)
+			write(2, ":( directory does not exist\n", 28);
+
+		prompt();
+		return 0;
+	}
+	/* go to $HOME if input is cd i.e argc == 0 */
 	if (argc == 1)
-		chdir
-
-
-	printf("%s\n", argv[0]);
+	{
+		for (i = 0; environ[i]; i++)
+		{
+			if (_strncmp(environ[i], home, 5) == 0)
+				break;
+		}
+		_strcpy(buf, &environ[i][5]);
+		chdir(buf);
+		free(buf);
+	}
 	prompt();
-	
 	return (0);
+}
+void _pwd(void)
+{
+	char buf[100];
+
+	getcwd(buf, 100);
+	
+	printf("%s\n", buf);
+	prompt();
 }
