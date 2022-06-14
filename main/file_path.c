@@ -26,7 +26,6 @@ int file_path(char **argv, int argc, char *cmd, ssize_t line_size)
 	if (strcmp(argv[0], "exit") == 0)
 		return (exit_process(argc, argv));
 
-
 	/* for built in setenv and unsetenv command */
 	if (strcmp(argv[0], "setenv") == 0)
 		return (_setenv(argc, argv));

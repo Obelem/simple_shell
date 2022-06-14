@@ -42,14 +42,17 @@ int exit_process(int argc, char **argv)
 int _setenv(int argc, char **argv)
 {
 	int i, j, env_len = 0;
-	char **my_environ = environ;
-	
+	static char **my_environ = NULL;
+	char **buf;
+	size_t size;
+
+	if (!my_environ)
+		my_environ = environ;
 
 	/* get length of environ variable */
 	while (my_environ[env_len])
 		env_len++;
 
-	printf("%d\n", env_len);
 	if (argc != 3)
 	{
 		write(2, ":( format -> setenv VARIABLE VALUE\n", 35);
@@ -78,11 +81,26 @@ int _setenv(int argc, char **argv)
 			return 0;
 		}
 	}
-	/* if no match, add new env variable below */
-	
 
+	/* if no match, create new env variable below */
+	env_len++;
+	buf = malloc(sizeof(char *) * env_len);
+
+	for (i = 0; my_environ[i]; i++)
+	{
+		size = strlen(my_environ[i]);
+		buf[i] = malloc(sizeof(char) * size); 
+		_strcpy(buf[i], my_environ[i]);
+	}
+	_strcat(argv[1], "=");
+	_strcat(argv[1], argv[2]);
+	buf[i++] = argv[1];
+	buf[i] = NULL;
+	environ = buf;
+	my_environ = buf;
+	
 	prompt();
-	return -1;
+	return 0;
 }
 
 /**
