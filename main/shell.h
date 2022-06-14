@@ -43,6 +43,7 @@ int _strncmp(char *str1, char* str2, int n);
 int exit_process(int argc, char **argv); /* ----> just added <----*/
 int _setenv(int argc, char **argv);
 int change_dir(int argc, char **argv);
-void _pwd(void);
+void print_pwd(void);
+void update_pwd(void);
 
 #endif

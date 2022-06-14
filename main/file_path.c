@@ -36,7 +36,7 @@ int file_path(char **argv, int argc, char *cmd, ssize_t line_size)
 		return (change_dir(argc, argv));
 
 	if (strcmp(argv[0], "pwd") == 0)
-		_pwd();
+		print_pwd();
 
 
 	if (argv[0][0] != '/')

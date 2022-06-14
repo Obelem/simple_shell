@@ -82,7 +82,7 @@ int _setenv(int argc, char **argv)
 	
 
 	prompt();
-	return 0;
+	return -1;
 }
 
 /**
@@ -94,8 +94,7 @@ int _setenv(int argc, char **argv)
 int change_dir(int argc, char **argv)
 {
 	int val, i;
-	char *home = "HOME=";
-
+	char *env_names[] = {"HOME=", "PWD="};
 	char *buf = malloc(sizeof(char) * 50);
 
 	if (argc > 2)
@@ -109,31 +108,64 @@ int change_dir(int argc, char **argv)
 		val = chdir(argv[1]);
 		if (val == -1)
 			write(2, ":( directory does not exist\n", 28);
+	
+		update_pwd();
 
 		prompt();
 		return 0;
 	}
-	/* go to $HOME if input is cd i.e argc == 0 */
 	if (argc == 1)
 	{
 		for (i = 0; environ[i]; i++)
 		{
-			if (_strncmp(environ[i], home, 5) == 0)
+			if (_strncmp(environ[i], env_names[0], 5) == 0)
 				break;
 		}
 		_strcpy(buf, &environ[i][5]);
 		chdir(buf);
+		
+		update_pwd();
+
 		free(buf);
+		prompt();
 	}
-	prompt();
 	return (0);
 }
-void _pwd(void)
+
+void update_pwd(void)
 {
-	char buf[100];
+	char *buf = malloc(sizeof(char) * 50);
+	char *new_pwd = NULL;
+	size_t pwd_len;
+	int i;
+
+	getcwd(buf, 50);
+	pwd_len = strlen(buf); /* make strlen function */
+
+	new_pwd = malloc(sizeof(char) * (pwd_len + 4));
+	_strcpy(new_pwd, "PWD=");
+	_strcat(new_pwd, buf);
+
+	free(buf);
+
+	for (i = 0; environ[i]; i++)
+	{
+		if (_strncmp(environ[i], "PWD=", 4) == 0)
+			break;
+	}
+	environ[i] = new_pwd;
+
+	return;
+}
+
+
+void print_pwd(void)
+{
+	char *buf = malloc(sizeof(char) * 100);
 
 	getcwd(buf, 100);
 	
-	printf("%s\n", buf);
+	printf("%s\n", buf); /* use our own function */
+	free(buf);
 	prompt();
 }
