@@ -37,6 +37,15 @@ int file_path(char **argv, int argc, char *cmd, ssize_t line_size)
 	if (strcmp(argv[0], "pwd") == 0)
 		print_pwd();
 
+	if (strcmp(argv[0], "unsetenv") == 0)
+	{
+		if (argc != 2)
+		{
+			write(2, ":( syntax -> unsetenv VARIABLE\n", 31);
+			return (-1);
+		}
+		return (_unsetenv(argv));
+	}
 
 	if (argv[0][0] != '/')
 	{

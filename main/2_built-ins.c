@@ -1,6 +1,40 @@
 #include "shell.h"
 
 /**
+ * exit_process - exits process with status
+ * @argv: tokenized input string array
+ * @argc: number of tokens or argument count (argc)
+ * Return: 1 on failure, 0 on success
+ */
+int exit_process(int argc, char **argv)
+{
+	int ret_val = 0, i;
+	
+	if (argc == 1)
+		exit(0);
+	
+	else if (argc > 2)
+	{
+		write(2, ":( too many arguments\n", 22);
+		prompt();
+		return (1);
+	}
+	for (i = 0; argv[1][i]; i++)
+	{
+		if (isdigit(argv[1][i]) == 0)
+		{
+			write(2, ":( input integers only\n", 23);
+			prompt();
+			return (1);
+		}
+	}
+	ret_val = atoi(argv[1]); /* atoi() used here */
+	exit(ret_val);
+
+	return (0);
+}
+
+/**
  * update_pwd - updates the present working directory
  */
 void update_pwd(void)

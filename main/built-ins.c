@@ -6,46 +6,20 @@
  */
 
 /*global variable for adding environment variables */
-char **my_environ;
+char **my_environ = NULL;
 
 /**
- * exit_process - exits process with status
- * @argv: tokenized input string array
- * @argc: number of tokens or argument count (argc)
- * Return: 1 on failure, 0 on success
+ * _setenv - sets the environment variables
+ * @argc: argument count
+ * @argv: command (tokenified)
+ * Return: val
  */
-int exit_process(int argc, char **argv)
-{
-	int ret_val = 0, i;
-	
-	if (argc == 1)
-		exit(0);
-	
-	else if (argc > 2)
-	{
-		write(2, ":( too many arguments\n", 22);
-		prompt();
-		return (1);
-	}
-	for (i = 0; argv[1][i]; i++)
-	{
-		if (isdigit(argv[1][i]) == 0)
-		{
-			write(2, ":( input integers only\n", 23);
-			prompt();
-			return (1);
-		}
-	}
-	ret_val = atoi(argv[1]); /* atoi() used here */
-	exit(ret_val);
-
-	return (0);
-}
-
 int _setenv(int argc, char **argv)
 {
 	int val, env_len = 0;
-	my_environ = environ;
+
+	if (!my_environ)
+		my_environ = environ;
 
 	while (my_environ[env_len])
 		env_len++;
@@ -135,6 +109,57 @@ int create_env(char **argv,  int env_len)
 	
 	return 1;
 }
+
+/**
+ * _unsetenv - deletes an environment variable
+ * @argv: tokenized command
+ * @argc: argument count
+ * Return:
+ */
+int _unsetenv(char **argv)
+{
+	int env_len, i, j, checker = 0;
+	size_t var_len;
+	char **buf;
+
+	if (!my_environ)
+		my_environ = environ;
+
+	for(env_len = 0; my_environ[env_len]; )
+		env_len++;	
+	var_len = strlen(argv[1]);
+	for (i = 0; my_environ[i]; i++)
+	{
+		if (_strncmp(my_environ[i], argv[1], var_len) == 0)
+		{
+			checker = 1;
+			break;
+		}
+	}
+	if (checker != 1)
+	{
+		prompt();
+		return (0);
+	}
+	buf = malloc(sizeof(char *) * (env_len - 1));
+	checker = i;
+	for (i = 0, j = 0; my_environ[i]; i++, j++)
+	{
+		if (checker == i)
+			i++;
+		if (!my_environ[i])
+			break;
+		var_len = strlen(my_environ[i]);
+		buf[j] = malloc(sizeof(char) * var_len); 
+		_strcpy(buf[j], my_environ[i]);
+	}
+	buf[j] = NULL;
+	environ = buf;
+	my_environ = buf;
+	prompt();
+	return 0;
+}
+
 
 /**
  * change_dir - built-in cd command

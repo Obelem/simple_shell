@@ -42,6 +42,7 @@ int _strncmp(char *str1, char* str2, int n);
 /* built-ins */
 int exit_process(int argc, char **argv); /* ----> just added <----*/
 int _setenv(int argc, char **argv);
+int _unsetenv(char **argv);
 int change_dir(int argc, char **argv);
 void print_pwd(void);
 void update_pwd(void);
