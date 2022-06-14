@@ -1,15 +1,18 @@
 #include "shell.h"
 
 /**
+ * Hello Frank -> PLEASE, TAKE NOTE!!
+ * I used atoi() to convert from ascii to integer, we have to create ours
+ */
+
+/*global variable for adding environment variables */
+char **my_environ;
+
+/**
  * exit_process - exits process with status
  * @argv: tokenized input string array
  * @argc: number of tokens or argument count (argc)
  * Return: 1 on failure, 0 on success
- */
-
-/**
- * Hello Frank -> PLEASE, TAKE NOTE!!
- * I used atoi() to convert from ascii to integer, we have to create ours
  */
 int exit_process(int argc, char **argv)
 {
@@ -41,15 +44,9 @@ int exit_process(int argc, char **argv)
 
 int _setenv(int argc, char **argv)
 {
-	int i, j, env_len = 0;
-	static char **my_environ = NULL;
-	char **buf;
-	size_t size;
+	int val, env_len = 0;
+	my_environ = environ;
 
-	if (!my_environ)
-		my_environ = environ;
-
-	/* get length of environ variable */
 	while (my_environ[env_len])
 		env_len++;
 
@@ -59,6 +56,29 @@ int _setenv(int argc, char **argv)
 		prompt();
 		return (1);
 	}
+	
+	val = modify_env(argv);
+
+	if (val != 1)
+		return val;
+
+	/* if no match, create new env variable below */
+	val = create_env(argv, ++env_len);
+
+	prompt();
+	return val;
+}
+
+/**
+ * modify_env - checks if env variable can be modified
+ * @argc: argument count
+ * @argv: argument vector (tokenified input)
+ * Return: -1 if string contains '=', 0 on success, 1 if no match
+ */
+int modify_env(char **argv)
+{
+	int i, j;
+
 	for (i = 0; my_environ[i]; i++)
 	{
 		for (j = 0; argv[1][j]; j++)
@@ -78,12 +98,24 @@ int _setenv(int argc, char **argv)
 			_strcat(argv[1], argv[2]);
 			my_environ[i] = argv[1];
 			prompt();
-			return 0;
+			return 0; 
 		}
 	}
+	return 1; /* no match, create the variable */
+}
 
-	/* if no match, create new env variable below */
-	env_len++;
+/**
+ * create_env - adds a new env variable
+ * @argv: command
+ * @my_environ: environment variable array
+ * Return: 1, always success
+ */
+int create_env(char **argv,  int env_len)
+{
+	int i;
+	char **buf;
+	size_t size;
+
 	buf = malloc(sizeof(char *) * env_len);
 
 	for (i = 0; my_environ[i]; i++)
@@ -94,13 +126,14 @@ int _setenv(int argc, char **argv)
 	}
 	_strcat(argv[1], "=");
 	_strcat(argv[1], argv[2]);
+
 	buf[i++] = argv[1];
 	buf[i] = NULL;
+
 	environ = buf;
 	my_environ = buf;
 	
-	prompt();
-	return 0;
+	return 1;
 }
 
 /**

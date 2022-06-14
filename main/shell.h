@@ -45,5 +45,7 @@ int _setenv(int argc, char **argv);
 int change_dir(int argc, char **argv);
 void print_pwd(void);
 void update_pwd(void);
+int modify_env(char **argv);
+int create_env(char **argv, int env_len);
 
 #endif
