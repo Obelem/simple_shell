@@ -31,6 +31,10 @@ int file_path(char **argv, int argc, char *cmd, ssize_t line_size)
 	if (strcmp(argv[0], "setenv") == 0)
 		return (_setenv(argc, argv));
 
+	/* for built in cd command */
+	if (strcmp(argv[0], "cd") == 0)
+		return (change_dir(argc, argv));
+
 
 
 	if (argv[0][0] != '/')

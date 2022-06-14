@@ -42,6 +42,7 @@ int exit_process(int argc, char **argv)
 int _setenv(int argc, char **argv)
 {
 	int i, j, env_len = 0;
+	char **my_environ = environ;
 	
 
 	/* get length of environ variable */
@@ -82,4 +83,28 @@ int _setenv(int argc, char **argv)
 
 	prompt();
 	return 0;
+}
+
+/**
+ * change_dir - built-in cd command
+ * @argc: argument count
+ * @argv: argument vector
+ * Return: 0 for success, -1 for failure
+ */
+int change_dir(int argc, char **argv)
+{
+	if (argc > 2)
+	{
+		write(2, ":( too many arguments\n", 22);
+		prompt();
+		return (-1);
+	}
+	if (argc == 1)
+		chdir
+
+
+	printf("%s\n", argv[0]);
+	prompt();
+	
+	return (0);
 }
