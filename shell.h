@@ -1,56 +1,81 @@
-#ifndef SHELL_H
-#define SHELL_H
-/**
- * == changes ==
- * 1. added <ctype.h> header to implement isdigit() in exit_process
- * 2. we need to make our custom isdigit() function
- * 3. changed return type of prompt(), tokenifier() and file_path() to int
- * to handle exit status
- * 4. added the exit_process() function prototype
- */
+#ifndef _SHELL_H_
+#define _SHELL_H_
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <sys/stat.h>
-#include <fcntl.h>
 #include <string.h>
-#include <ctype.h> /* we need to write ours */
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/wait.h>
+#include <limits.h>
+#include <signal.h>
 
-/* Built in global variable to help access environment variables */
-extern char **environ;
 
+/**
+ * struct variables - variables
+ * @av: command line arguments
+ * @buffer: buffer of command
+ * @env: environment variables
+ * @count: count of commands entered
+ * @argv: arguments at opening of shell
+ * @status: exit status
+ * @commands: double pointer to commands
+ */
+typedef struct variables
+{
+	char **av;
+	char *buffer;
+	char **env;
+	size_t count;
+	char **argv;
+	int status;
+	char **commands;
+} vars_t;
 
-/*global variable for adding environment variables */
-extern char **my_environ
+/**
+ * struct builtins - struct for the builtin functions
+ * @name: name of builtin command
+ * @f: function for corresponding builtin
+ */
+typedef struct builtins
+{
+	char *name;
+	void (*f)(vars_t *);
+} builtins_t;
 
-int prompt(void);
-int tokenifier(char *cmd, ssize_t line_size);
-void read_cmd(char **argv, char *cmd, ssize_t line_size); 
-int file_path(char **argv, int argc, char *cmd, ssize_t line_size); 
+char **make_env(char **env);
+void free_env(char **env);
 
-/* utilities */
-int count_tok(char *cmd, char *delim);
-int count_tok_char(char *token);
-ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
-void assign_lineptr(char **lineptr, size_t *n, char *buffer, size_t b);
+ssize_t _puts(char *str);
+char *_strdup(char *strtodup);
+int _strcmpr(char *strcmp1, char *strcmp2);
+char *_strcat(char *strc1, char *strc2);
+unsigned int _strlen(char *str);
 
-/* strfunc */
-char *_strncpy(char *dest, const char *src, int n);
-char *_strcpy(char *dest, const char *src);
-char *_strcat(char *dest, const char *src);
-int _strcmp(char *str1, char* str2);
-int _strncmp(char *str1, char* str2, int n);
+char **tokenize(char *buffer, char *delimiter);
+char **_realloc(char **ptr, size_t *size);
+char *new_strtok(char *str, const char *delim);
 
-/* built-ins */
-int exit_process(int argc, char **argv); /* ----> just added <----*/
-int _setenv(int argc, char **argv);
-int _unsetenv(char **argv);
-int change_dir(int argc, char **argv);
-void print_pwd(void);
-void update_pwd(void);
-int modify_env(char **argv);
-int create_env(char **argv, int env_len);
+void (*check_for_builtins(vars_t *vars))(vars_t *vars);
+void new_exit(vars_t *vars);
+void _env(vars_t *vars);
+void new_setenv(vars_t *vars);
+void new_unsetenv(vars_t *vars);
 
-#endif
+void add_key(vars_t *vars);
+char **find_key(char **env, char *key);
+char *add_value(char *key, char *value);
+int _atoi(char *str);
+
+void check_for_path(vars_t *vars);
+int path_execute(char *command, vars_t *vars);
+char *find_path(char **env);
+int execute_cwd(vars_t *vars);
+int check_for_dir(char *str);
+
+void print_error(vars_t *vars, char *msg);
+void _puts2(char *str);
+char *_uitoa(unsigned int count);
+
+#endif /* _SHELL_H_ */

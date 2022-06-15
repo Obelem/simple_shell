@@ -1,108 +1,121 @@
 #include "shell.h"
 
 /**
- * _strncpy - copies n characters of string pointed
- *            to by src, to the buffer pointed by dest.
- * @dest: Pointer to the destination of copied string.
- * @src: Pointer to the src of the source string.
- * @n: number of char to copy
+ * _puts - writes a string to standard output
+ * @str: string to write
  *
- * Return: Pointer to dest
+ * Return: number of chars printed or -1 on failure
  */
-
-char *_strncpy(char *dest, const char *src, int n)
+ssize_t _puts(char *str)
 {
-	int i;
+	ssize_t num, len;
 
-	for (i = 0; src[i] != '\0' && i < n; i++)
-		dest[i] = src[i];
-
-	dest[i] = '\0';
-
-	return (dest);
+	num = _strlen(str);
+	len = write(STDOUT_FILENO, str, num);
+	if (len != num)
+	{
+		perror("Fatal Error");
+		return (-1);
+	}
+	return (len);
 }
 
 /**
- * _strcpy - copies characters of string pointed to
- *           by src, to the buffer pointed by dest.
- * @dest: Pointer to the destination of copied string.
- * @src: Pointer to the src of the source string.
- *
- * Return: Pointer to dest
+ * _strdup - returns pointer to new mem alloc space which contains copy
+ * @strtodup: string to be duplicated
+ * Return: a pointer to the new duplicated string
  */
-
-char *_strcpy(char *dest, const char *src)
+char *_strdup(char *strtodup)
 {
-	int i;
+	char *copy;
 
-	for (i = 0; src[i] != '\0'; i++)
-		dest[i] = src[i];
+	int len, i;
 
-	dest[i] = '\0';
+	if (strtodup == 0)
+		return (NULL);
 
-	return (dest);
+	for (len = 0; strtodup[len]; len++)
+		;
+	copy = malloc((len + 1) * sizeof(char));
+
+	for (i = 0; i <= len; i++)
+		copy[i] = strtodup[i];
+
+	return (copy);
 }
 
 /**
- * _strcat - Concantenates src string to dest string
- * @dest: Pointer to destination string.
- * @src: Pointer to source string.
- *
- * Return: Pointer to destination string
+ * _strcmpr - compares two strings
+ * @strcmp1: first string, of two, to be compared in length
+ * @strcmp2: second string, of two, to be compared
+ * Return: 0 on success, anything else is a failure
  */
-
-char *_strcat(char *dest, const char *src)
-{
-	char *ptrdest;
-	const char *ptrsrc;
-
-	ptrdest = dest, ptrsrc = src;
-
-	while (*ptrdest != '\0')
-		ptrdest++;
-
-	while (*ptrsrc != '\0')
-		*ptrdest++ = *ptrsrc++;
-
-	*ptrdest = '\0';
-
-	return (dest);
-}
-
-/**
- * _strcmp - compare two strings
- * @str1: pointer to first string
- * @str2: pointer ro second string
- *
- * Return: 0 if match completely else -1
- */
-
-int _strcmp(char *str1, char *str2)
+int _strcmpr(char *strcmp1, char *strcmp2)
 {
 	int i;
 
-	for (i = 0; str1[i] != '\0'; i++)
-		if (str1[i] != str2[i])
-			return (-1);
-
-	return (0);
+	i = 0;
+	while (strcmp1[i] == strcmp2[i])
+	{
+		if (strcmp1[i] == '\0')
+			return (0);
+		i++;
+	}
+	return (strcmp1[i] - strcmp2[i]);
 }
 
 /**
- * _strncmp - compare n portion of string
- * @str1: pointer to first string
- * @str2: pointer ro second string
- * @n: number of str1 chars to compare
- *
- * Return: 0 if match completely else -1
+ * _strcat - concatenates two strings
+ * @strc1: first string
+ * @strc2: second string
+ * Return: pointer
  */
-
-int _strncmp(char *str1, char *str2, int n)
+char *_strcat(char *strc1, char *strc2)
 {
-	int i;
+	char *newstring;
+	unsigned int len1, len2, newlen, i, j;
 
-	for (i = 0; str1[i] != '\0' && i < n; i++)
-		if (str1[i] != str2[i])
-			return (-1);
-	return (0);
+	len1 = 0;
+	len2 = 0;
+	if (strc1 == NULL)
+		len1 = 0;
+	else
+	{
+		for (len1 = 0; strc1[len1]; len1++)
+			;
+	}
+	if (strc2 == NULL)
+		len2 = 0;
+	else
+	{
+		for (len2 = 0; strc2[len2]; len2++)
+			;
+	}
+	newlen = len1 + len2 + 2;
+	newstring = malloc(newlen * sizeof(char));
+	if (newstring == NULL)
+		return (NULL);
+	for (i = 0; i < len1; i++)
+		newstring[i] = strc1[i];
+	newstring[i] = '/';
+	for (j = 0; j < len2; j++)
+		newstring[i + 1 + j] = strc2[j];
+	newstring[len1 + len2 + 1] = '\0';
+	return (newstring);
+}
+
+/**
+ * _strlen - returns the length of a string
+ * @str: string to be measured
+ * Return: length of string
+ */
+unsigned int _strlen(char *str)
+{
+	unsigned int len;
+
+	len = 0;
+
+	for (len = 0; str[len]; len++)
+		;
+	return (len);
 }
