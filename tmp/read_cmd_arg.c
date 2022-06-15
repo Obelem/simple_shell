@@ -2,8 +2,8 @@
 
 /**
  * read_cmd - Function to read and execute inputs
- * @argv: double pointer to tokenified input
- * @cmd: exact command line input
+ * @argv: Pointer to argumnets pointers
+ * @cmd: command line input
  * @line_size: length of cmd
  *
  */
@@ -27,7 +27,7 @@ void read_cmd(char **argv, char *cmd, ssize_t line_size)
 		{
 			if (cmd[i] == special_char[j])
 			{
-				write(2, ":( Do not use special characters\n", 33);
+				write(2, "./shell: No such file or directory\n", 35);
 				free(cmd);
 				prompt();
 				return;
@@ -46,6 +46,6 @@ void read_cmd(char **argv, char *cmd, ssize_t line_size)
 	else
 	{
 		if (execve(argv[0], argv, NULL) == -1)
-			write(2, ":( File does not exist\n", 23);
+			write(2, "./Xshell: No such file or directory\n", 36);
 	}
 }
