@@ -1,9 +1,9 @@
 #include "shell.h"
 
 /**
- * main - start shell
+ * main - call shell prompt
  *
- * Return: void
+ * Return: (0)
  */
 
 int main(void)

@@ -1,8 +1,9 @@
 #include "shell.h"
 
 /**
- * prompt - get and read input
+ * prompt - get input
  *
+ * Return: void
  */
 
 void prompt(void)
@@ -12,8 +13,7 @@ void prompt(void)
 	ssize_t line_size = 0;
 
 	write(1, "#cisfun$ ", 9);
-
 	line_size = getline(&line, &len, stdin);
 
-	tokenifier(line, line_size - 1);
+	read_cmd(line, line_size - 1);
 }
