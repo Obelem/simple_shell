@@ -1,8 +1,5 @@
 #include "shell.h"
 
-/*global variable for adding environment variables */
-char **my_environ = NULL;
-
 /**
  * _setenv - sets the environment variables
  * @argc: argument count

@@ -22,6 +22,9 @@
 extern char **environ;
 
 
+/*global variable for adding environment variables */
+extern char **my_environ
+
 int prompt(void);
 int tokenifier(char *cmd, ssize_t line_size);
 void read_cmd(char **argv, char *cmd, ssize_t line_size); 
