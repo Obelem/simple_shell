@@ -7,6 +7,7 @@
  *
  * Return: 1 if match, 0 if not
  */
+
 unsigned int check_match(char c, const char *str)
 {
 	unsigned int i;
