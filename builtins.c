@@ -62,6 +62,7 @@ void new_exit(vars_t *vars)
 /**
  * _env - prints the current environment
  * @vars: struct of variables
+ *
  * Return: void.
  */
 void _env(vars_t *vars)
