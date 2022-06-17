@@ -39,6 +39,7 @@ int path_execute(char *command, vars_t *vars)
 	}
 	return (0);
 }
+
 /**
  * find_path - finds the PATH variable
  * @env: array of environment variables
