@@ -32,6 +32,7 @@ char **make_env(char **env)
  *
  * Return: void
  */
+
 void free_env(char **env)
 {
 	unsigned int i;
