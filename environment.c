@@ -6,6 +6,7 @@
  *
  * Return: pointer to the new environment
  */
+
 char **make_env(char **env)
 {
 	char **newenv = NULL;
