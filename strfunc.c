@@ -23,6 +23,7 @@ ssize_t _puts(char *str)
 /**
  * _strdup - returns pointer to new mem alloc space which contains copy
  * @strtodup: string to be duplicated
+ *
  * Return: a pointer to the new duplicated string
  */
 char *_strdup(char *strtodup)
